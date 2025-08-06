@@ -196,15 +196,15 @@ Note: Ollama misclassified "medical help" as "SUPPLIES" because it received Span
 ## Performance Observed
 
 From actual system logs:
-- **Ollama Classification**: 19-70 seconds (`[OLLAMA] Response received in 70.2 seconds`)
-- **Message Routing**: <2 seconds via Meshtastic
+- **Ollama Classification**: about 100 seconds (`[OLLAMA] Response received in 70.2 seconds`)
+- **Message Routing**: <2 seconds via Meshtastic over multiple miles on LoRa comms.
 - **Failed Classification Fallback**: Immediate (returns default categorization)
 
 ## Technical Validation
 
 Successfully demonstrated:
-- **Gemma 2b on Jetson**: 70-second inference with 120-second timeout safety
-- **Language Detection Fix**: Resolved false positives with explicit ENGLISH/NON-ENGLISH prompt
+- **Gemma 2b on Jetson**: 70-second inference with 180-second timeout safety
+- **Language Detection Fix**: Resolved false positives with explicit ENGLISH/NON-ENGLISH prompt and multilingual translation with gemma:7b on user device
 - **Fallback Handling**: System continues operating when Ollama fails
 - **Message Enrichment**: 5-field format preserves sender ID for response routing
 
@@ -218,12 +218,12 @@ The combination of Gemma's language understanding with Meshtastic's mesh network
 
 ```
 gemnet/
-├── user_interface.py      # User terminal with Gemma 7b translation
-├── router_jetson.py       # Router with Gemma 2b classification  
-├── aid_provider.py        # Responder interface
-├── meshtastic_config.sh   # V3 radio configuration
-└── models/
-    └── gemma_disaster_ft  # Fine-tuned model (unused in demo)
+├── gemnet_user_portal.py      # User terminal with Gemma 7b translation
+├── gemnet_core_router.py       # Router with Gemma 2b classification  
+├── aid_provider_portal.py        # Responder interface
+├── README  # shows meshtastic config V3 radio configuration and the jetson setup. 
+└── fine tuned models on disaster dataset using unsloth
+    └── # Fine-tuned model (unused in demo) - https://colab.research.google.com/drive/13r_muPHnecut0U6R0sSGXGtBS5LC3yh9?usp=sharing
 ```
 
-Total deployment cost: ~$450 for three-node proof of concept, scalable to hundreds of nodes.
+Total deployment cost: ~$90 for three-node proof of concept, that cover miles.and 2 jetson nanos costing around $250 each.
