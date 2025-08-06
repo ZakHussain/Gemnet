@@ -2,6 +2,8 @@
 
 Disaster communication system using LoRa mesh networking and Gemma language models for intelligent message routing and translation.
 
+ - Youtube link: https://youtu.be/qNSqGPjhF1Y
+
 ## Hardware Requirements
 
 - **3x Heltec V3 LoRa boards** (ESP32-based with built-in LoRa)
